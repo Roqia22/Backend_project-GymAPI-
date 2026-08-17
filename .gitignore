@@ -1,0 +1,12 @@
+node_modules/
+.env
+
+
+# js files 
+dist/
+
+
+
+# Os
+.DS/Store
+Thumbs.db
