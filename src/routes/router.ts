@@ -29,3 +29,18 @@ router.delete("/:id", deleteClass);
 router.post("/bookings", auth, authZ("member"), bookClass);
 router.patch("/bookings/:bookingId", auth, authZ("member"), cancelBooking);
 router.get("/sessions/:sessionId", auth, authZ("trainer"), viewSessionBookings);
+
+import {
+    createClass,
+    getClasses,
+    updateClass,
+    deleteClass,
+    searchClasses
+} from "../controllers/classSession.controller.js";
+
+export const router = Router();
+router.post("/", createClass);
+router.get("/", getClasses);
+router.get("/search", searchClasses);
+router.put("/:id", updateClass);
+router.delete("/:id", deleteClass);
