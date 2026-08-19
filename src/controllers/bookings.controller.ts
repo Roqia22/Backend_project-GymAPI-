@@ -1,7 +1,7 @@
-import type { Request, Response } from "express";
+import type { Request,Response } from "express";
 import mongoose from "mongoose";
 import Booking from "../models/bookings.model.js";
-import ClassSession from "../models/classSession.model.ts";
+import ClassSession from "../models/classSession.model.js";
 
 const bookClass = async (req: Request, res: Response) => {
   try {

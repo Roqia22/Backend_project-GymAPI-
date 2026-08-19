@@ -9,7 +9,7 @@
 
     "strict": true,
     "esModuleInterop": true,
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false,
 
     "sourceMap": false,
     "declaration": false,

@@ -3,12 +3,12 @@ import mongoose, { Schema } from "mongoose";
 const bookingSchema = new Schema({
   member: {
     type: Schema.Types.ObjectId,
-    ref: "User", // users model
+    ref: "User", 
     required: true
   },
   session: {
     type: Schema.Types.ObjectId,
-    ref: "ClassSession", // sessions model
+    ref: "ClassSession", 
     required: true
   },
 
