@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
+import mongoose from "mongoose";
 import Booking from "../models/bookings.model.js";
-import ClassSession from "../models/temp-sessions.model.js";
+import ClassSession from "../models/classSession.model.ts";
 
 const bookClass = async (req: Request, res: Response) => {
   try {
@@ -53,9 +54,14 @@ const cancelBooking = async (req: Request, res: Response) => {
         message: "Booking not found",
       });
     }
+    if (memberId !== booking.member.toString()) {
+      return res.status(403).json({
+        message: "You can only access your own bookings",
+      });
+    }
     const session = await ClassSession.findById(booking.session);
 
-    if (session&&new Date(session.timeSlot) < new Date()) {
+    if (session && new Date(session.timeSlot) < new Date()) {
       return res.status(400).json({ message: "Session must be in the future" });
     }
     if (booking.status === "cancelled") {
@@ -72,6 +78,33 @@ const cancelBooking = async (req: Request, res: Response) => {
   }
 };
 
+const viewSessionBookings = async (req: Request, res: Response) => {
+  try {
+    const { sessionId } = req.params as { sessionId: string };
 
+    const trainerId = req.user!.id;
 
-export { bookClass, cancelBooking };
+    const session = await ClassSession.findById(sessionId);
+    if (!session) {
+      return res.status(404).json({
+        message: "Class session not found",
+      });
+    }
+
+    if (trainerId !== session.trainer.toString()) {
+      return res.status(403).json({
+        message: "You can only access your own sessions",
+      });
+    }
+    const bookings = await Booking.find({
+      session: new mongoose.Types.ObjectId(sessionId),
+      status: "booked",
+    }).populate("member", "fullName email");
+
+    return res.status(200).json(bookings);
+  } catch (error) {
+    return res.status(500).json({ message: "Error viewing bookings", error });
+  }
+};
+
+export { bookClass, cancelBooking, viewSessionBookings };
