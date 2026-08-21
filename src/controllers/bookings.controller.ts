@@ -1,9 +1,8 @@
 import type { Request, Response } from "express";
-import mongoose from "mongoose";
 import Booking from "../models/bookings.model.js";
 import ClassSession from "../models/classSession.model.js";
 import WaitList from "../models/waitList.model.js";
-import { AuthRequest } from "../middlewares/ِAuth.middleware.js";
+import { AuthRequest } from "../middlewares/auth.middleware.js";
 
 const bookClass = async (req: AuthRequest, res: Response) => {
   try {   
@@ -24,7 +23,6 @@ const bookClass = async (req: AuthRequest, res: Response) => {
       status: "booked",
     });
   
-   
     if (booked) {
       return res
         .status(400)
@@ -88,7 +86,7 @@ const cancelBooking = async (req: AuthRequest, res: Response) => {
     }
 
     booking.status = "cancelled";
-   
+  
     await booking.save();
     const waiting = await WaitList.findOne({ session: booking.session });
     if (waiting) {
@@ -99,7 +97,6 @@ const cancelBooking = async (req: AuthRequest, res: Response) => {
       await WaitList.deleteOne({ _id: waiting._id });
     }
 
-  
     return res.status(200).json(booking);
   } catch (error) {
     return res.status(500).json({ message: "Error cancelling booking", error });

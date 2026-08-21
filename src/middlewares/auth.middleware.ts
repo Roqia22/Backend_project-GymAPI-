@@ -40,7 +40,6 @@ export const auth = (req: AuthRequest, res: Response, next: NextFunction) => {
     }
     try{
         req.user = verifyToken(token as string)
-        // console.log("okay the problem in AuthZ not here")
         next()
     }
     catch(error){

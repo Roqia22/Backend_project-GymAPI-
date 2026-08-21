@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { auth, authZ } from "../middlewares/ِAuth.middleware.js";
+import { auth, authZ } from "../middlewares/auth.middleware.js";
 import { signIn, signUp } from "../controllers/user.controller.js";
 
 import {
@@ -52,7 +52,6 @@ export const router = Router();
 router.post("/signUp",validateSignUp, signUp);
 
 
-
 /**
  * @swagger
  * /gym/signIn:
@@ -79,7 +78,7 @@ router.post("/signIn", signIn);
 
 /**
  * @swagger
- * /gym:
+ * /gym/classes:
  *   post:
  *     tags:
  *       - ClassSession
@@ -108,7 +107,7 @@ router.post("/signIn", signIn);
  */
 
 router.post(
-  "/",
+  "/classes",
   auth,
   authZ(userRole.TRAINER),
   validateCreateClassSession,
@@ -117,7 +116,7 @@ router.post(
 
 /**
  * @swagger
- * /gym/all:
+ * /gym/classes/all:
  *   get:
  *     tags:
  *       - ClassSession
@@ -134,12 +133,12 @@ router.post(
  *       500:
  *         description: Some server error
  */
-router.get("/all",auth, authZ(userRole.TRAINER), getClasses); //must show all his sessions
+router.get("/classes/all",auth, authZ(userRole.TRAINER), getClasses); //must show all his sessions
 
 
 /**
  * @swagger
- * /gym/search:
+ * /gym/classes/search:
  *   get:
  *     tags:
  *       - ClassSession
@@ -205,11 +204,11 @@ router.get("/all",auth, authZ(userRole.TRAINER), getClasses); //must show all hi
  *         description: Failed to search classes
  */
 
-router.get("/search",auth, authZ(userRole.MEMBER), searchClasses);//want to be updated
+router.get("/classes/search",auth, authZ(userRole.MEMBER), searchClasses);//want to be updated
 
 /**
  * @swagger
- * /gym/{id}:
+ * /gym/classes/{id}:
  *   patch:
  *     tags:
  *       - ClassSession
@@ -245,7 +244,7 @@ router.get("/search",auth, authZ(userRole.MEMBER), searchClasses);//want to be u
  */
 
 router.patch(
-  "/:id",
+  "/classes/:id",
   auth,
   authZ(userRole.TRAINER),
   updateClass
@@ -253,7 +252,7 @@ router.patch(
 
 /**
  * @swagger
- * /gym/{id}:
+ * /gym/classes/{id}:
  *   delete:
  *     tags:
  *       - ClassSession
@@ -281,8 +280,7 @@ router.patch(
  *       500:
  *         description: Some server error
  */
-router.delete("/:id",auth, authZ(userRole.TRAINER), deleteClass);//own session
-
+router.delete("/classes/:id",auth, authZ(userRole.TRAINER), deleteClass);//own session
 
 
 /**
@@ -356,8 +354,6 @@ router.post(
  *         description: Some server error
  */
 router.patch("/bookings/:bookingId", auth, authZ(userRole.MEMBER), cancelBooking); //own book only
-
-
 
 
 /**

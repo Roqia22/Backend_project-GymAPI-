@@ -1,4 +1,3 @@
-import strict from "assert/strict";
 import mongoose, { Schema, type HydratedDocument } from "mongoose";
 
 export interface IUser {
@@ -33,7 +32,6 @@ export const userSchema = new Schema<IUser> ({
         type: String,
         enum: Object.values(userRole),
         default: userRole.MEMBER
-     
     }
 },{ timestamps: true });
 

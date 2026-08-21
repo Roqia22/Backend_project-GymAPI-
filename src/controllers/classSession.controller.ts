@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import ClassSession from "../models/classSession.model.js";
-import { AuthRequest } from "../middlewares/ِAuth.middleware.js";
+import { AuthRequest } from "../middlewares/auth.middleware.js";
 import Booking from "../models/bookings.model.js";
+
 export const createClass = async (req: AuthRequest, res: Response) => {
   try {
     const trainerId = req.user!.id;
@@ -25,7 +26,11 @@ export const createClass = async (req: AuthRequest, res: Response) => {
       capacity,
     });
 
-    return res.status(201).json("class Session created Sucessfuly :)");
+    return res.status(201).json({
+    message: "Class session created successfully :)",
+    data: newClass 
+    });
+
   } catch (error) {
     const message = error instanceof Error ? error.message : "";
 
@@ -34,6 +39,7 @@ export const createClass = async (req: AuthRequest, res: Response) => {
     });
   }
 };
+
 export const getClasses = async (req: AuthRequest, res: Response) => {
   try {
     const trainerId = req.user!.id;
@@ -111,7 +117,6 @@ export const deleteClass = async (req: AuthRequest, res: Response) => {
       });
     }
 
- 
     if (cSession.trainer.toString() !== trainerId) {
       return res.status(403).json({
         message: "You can only delete your own class sessions",
@@ -148,7 +153,7 @@ export const deleteClass = async (req: AuthRequest, res: Response) => {
   }
 };
 
-export const searchClasses = async (req:Request , res:Response) =>{ 
+export const searchClasses = async (req:Request , res:Response) => { 
     try { 
         const {title, trainer, day, time , available} = req.query; 
         const filter : any ={}; 
@@ -161,15 +166,15 @@ export const searchClasses = async (req:Request , res:Response) =>{
         if (day){ 
             const startOfDay = new Date(day as string); 
             startOfDay.setHours(0,0,0,0); 
- 
+
             const endOfDay = new Date(day as string); 
             endOfDay.setHours(23,59,59,999); 
- 
+
             filter.timeSlot={ 
                 $gte:startOfDay, 
                 $lte:endOfDay 
             }; 
- 
+
         } 
         if(time){ 
             const[hours,minutes]=(time as string).split(":").map(Number); 
@@ -182,13 +187,12 @@ export const searchClasses = async (req:Request , res:Response) =>{
                         { 
                             $eq:[{$minute:"$timeSlot"}, minutes] 
                         }, 
-                         
                     ] 
                 } 
             }; 
         } 
-       const classes = await ClassSession.find(filter).populate("trainer"); 
-       if (available) {
+      const classes = await ClassSession.find(filter).populate("trainer"); 
+      if (available) {
   const availableClasses = [];
 
   for (const cSession of classes) {

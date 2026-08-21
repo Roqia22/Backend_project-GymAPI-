@@ -30,7 +30,7 @@ export const signUp = async (req: Request, res: Response) => {
         if (existingUser) {
             return res.status(400).json({ message: "Email is already registered" });
         }
-      
+    
         const saltRound = 10
         const hashedPassword = await bcrypt.hash(password, saltRound)
         const newUser = await User.create({
@@ -53,7 +53,7 @@ export const signUp = async (req: Request, res: Response) => {
 export const signIn = async (req: Request, res: Response) => {
     try{
         const {email, password} = req.body
-         if(!email || !password){
+        if(!email || !password){
             return res.status(400).json({ message: "All fields are required" })
         }
         const user = await User.findOne({email}).select("+password")
