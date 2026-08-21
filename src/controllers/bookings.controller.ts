@@ -125,7 +125,7 @@ const viewSessionBookings = async (req: AuthRequest, res: Response) => {
       });
     }
     const bookings = await Booking.find({
-      session: new mongoose.Types.ObjectId(sessionId),
+      session: sessionId,
       status: "booked",
     }).populate("member", "fullName email");
 

@@ -55,7 +55,7 @@ export const specs = swaggerJSDoc(options);
  *       example:
  *         full_name: Yazeed Ahmed
  *         email: yazeed@yahoo.com
- *         password: Zezo1223@#
+ *         password: Yazeed@#12
  *         role: trainer
  */
 
@@ -80,7 +80,7 @@ export const specs = swaggerJSDoc(options);
  *           description: Password of the user
  *       example:
  *         email: yazeed@yahoo.com
- *         password: Zezo1223@#
+ *         password: Yazeed@#12
  */
 
 /**
@@ -139,8 +139,8 @@ export const specs = swaggerJSDoc(options);
  *           description: Current status of the booking
  *
  *       example:
- *         member: 68a123456789abcdef123456
- *         session: 68b987654321fedcba654321
+ *         member: 68a123456789ab
+ *         session: 68b987654321fed
  *         status: booked
  */
 
@@ -158,7 +158,7 @@ export const specs = swaggerJSDoc(options);
  *           type: string
  *           description: ID of the class session to book
  *       example:
- *         sessionId : 68b987654321fedcba654321
+ *         sessionId : 68b987654321fed
  */
 
 
