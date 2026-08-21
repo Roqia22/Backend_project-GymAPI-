@@ -6,8 +6,8 @@ A RESTful backend service for managing gym operations, class session schedules, 
 
 ## 🚀 Live Demo & Documentation
 
-- **Production Base URL:** [`https://backendproject-gymapi-production-3758.up.railway.app`](https://backendproject-gymapi-production-3758.up.railway.app)
-- **Interactive Swagger Documentation:** [`https://backendproject-gymapi-production-3758.up.railway.app/api-docs/`](https://backendproject-gymapi-production-3758.up.railway.app/api-docs/#/)
+- **Production Base URL:** [`https://backendproject-gymapi-production.up.railway.app`](https://backendproject-gymapi-production.up.railway.app)
+- **Interactive Swagger Documentation:** [`https://backendproject-gymapi-production.up.railway.app/api-docs/`](https://backendproject-gymapi-production.up.railway.app/api-docs/)
 
 ---
 
