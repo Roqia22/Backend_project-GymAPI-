@@ -323,9 +323,10 @@ router.post(
   bookClass
 ); // member sends only session ID
 
+
 /**
  * @swagger
- * /gym/bookings/{bookingId}:
+ * /gym/bookings/{bookingId}/cancel:
  *   patch:
  *     tags:
  *       - Booking
@@ -353,7 +354,7 @@ router.post(
  *       500:
  *         description: Some server error
  */
-router.patch("/bookings/:bookingId", auth, authZ(userRole.MEMBER), cancelBooking); //own book only
+router.patch("/bookings/:bookingId/cancel", auth, authZ(userRole.MEMBER), cancelBooking); //own book only
 
 
 /**

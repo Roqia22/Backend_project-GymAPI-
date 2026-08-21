@@ -31,19 +31,33 @@ export function validateSignUp(req: Request, res: Response, next: NextFunction){
   }
 };
 
-export function validateCreateClassSession(req: Request, res: Response, next: NextFunction){
-  
-  try{  const {title,timeSlot,capacity} = req.body;
-    if(!title || !timeSlot ||  !capacity){
-          return res.status(400).json({ message: "All fields are required" })
+export function validateCreateClassSession(req: Request, res: Response, next: NextFunction) {
+  try {
+    const { title, timeSlot, capacity } = req.body;
+
+    if (!title || !timeSlot || !capacity) {
+      return res.status(400).json({ message: "All fields are required" });
     }
-    if(capacity <1) return res.status(400).json({ message: "Capacity must be greater than zero and integer" })
-    if (timeSlot < new Date()) {
+
+    if (capacity < 1) {
+      return res.status(400).json({ message: "Capacity must be greater than zero and integer" });
+    }
+
+    const sessionDate = new Date(timeSlot);
+    const currentDate = new Date();
+
+    if (isNaN(sessionDate.getTime())) {
+      return res.status(400).json({ message: "Invalid date format" });
+    }
+
+    if (sessionDate.getTime() < currentDate.getTime()) {
       return res.status(400).json({ message: "Session must be in the future" });
     }
+
     next();
   } catch (error) {
-  return res.status(404).json({
-    message: `created classSeccsion Failed`,
-  });}
+    return res.status(500).json({
+      message: `Creating class session failed`,
+    });
+  }
 };

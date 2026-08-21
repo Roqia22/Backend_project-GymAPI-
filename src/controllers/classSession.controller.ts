@@ -95,7 +95,9 @@ export const updateClass = async (req: AuthRequest, res: Response) => {
         message: "Class not found",
       });
     }
-    res.status(200).json(updatedClass);
+    res.status(200).json({
+      message: "class has been updated successfuly"
+      , updatedClass});
   } catch (error) {
     const message = error instanceof Error ? error.message : "";
 
